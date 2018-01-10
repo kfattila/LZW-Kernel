@@ -4,7 +4,11 @@
     Compute compression based distance between all pairs of sequences
     from a FASTA file using the lzw compressor.
 
-    Reference:
+    Reference: 
+    Authors: Gleb Filatov, Bruno Bauwens, Attila Kert\'esz-Farkas
+    Title: LZW-Kernel: fast kernel for protein sequence comparison utilizing 
+    variable length code blocks from LZW compressors
+    email: akerteszfarkas@hse.ru
     
  *********************************************************************/
 
