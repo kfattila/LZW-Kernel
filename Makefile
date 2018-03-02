@@ -34,7 +34,7 @@
 # just set the CC value to your compiler and make sure optimization
 # is turned on (it significantly affects the running time).
 #
-CC=g++
+CC=gcc
 CFLAGS= -lm -g -Ofast -Wall -Wshadow -lstdc++
 
 all: LZWkernel_all_vs_all LZWdist_all_vs_all
