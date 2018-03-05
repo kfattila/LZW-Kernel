@@ -47,7 +47,7 @@ int main(int argc, char *argv[]){
     buflen = 1000000;
 	buffer = malloc(sizeof(int)*buflen*ALPHABET_NUM);   // Approx. 100 Mb of RAM.
 
-	int i, seq_num;
+	int i, k, l, seq_num;
     int compressed_len;
     
     // Count the sequences in the input fasta file
@@ -105,18 +105,18 @@ int main(int argc, char *argv[]){
     printf("\n"); 
     int common_length;
     // Calculate the LZW kernel for each sequence pair
-    for (int k = 0; k < seq_num; ++k){
+    for (k = 0; k < seq_num; ++k){
         printf("%s", headers[k]->description);  // Print the sequence header to the output
         
         // The LZW kernel is symmetric, so use k(y,x) := k(x,y) for l < k
-        for (int l = 0; l < k; ++l){
+        for (l = 0; l < k; ++l){
             printf("\t%g", kernel_mx[l][k]);            
         }
         
         kernel_mx[k] = malloc(sizeof(float)*seq_num);
         // Calculate the LZW-Kernel k(x,y) for two sequences x,y. 
         // The calculation requires only parsing the common branches of the dictionaries simultenously for common code words.
-        for (int l = k; l < seq_num; ++l){
+        for (l = k; l < seq_num; ++l){
             common_length = get_common_code_len(code_tree[k], code_tree[l], 0, 0, 1);// Find common codes and return the sum of their lengths
             kernel_mx[k][l] = exp((common_length - (0.5 * ( C[k] + C[l] ))) / gamma);
             printf("\t%g", kernel_mx[k][l]);
@@ -147,8 +147,7 @@ int main(int argc, char *argv[]){
 
 int compress(char* str){
 
-	int seq_len;
-
+	int i, seq_len;
 	int cnt = 0;
 	int pointer = 0;
 	memset(buffer, 0, sizeof(int)*(bufidx)*ALPHABET_NUM);
@@ -166,7 +165,7 @@ int compress(char* str){
         if (buffer[(int)str[seq_len]] == 0)
             buffer[(int)str[seq_len]] = (bufidx++)*ALPHABET_NUM;
     }
-    for (int i = 0; i < seq_len; ++i){
+    for (i = 0; i < seq_len; ++i){
         if (buffer[pointer+(int)str[i]] == 0 ){
             buffer[pointer+(int)str[i]] = (bufidx++)*ALPHABET_NUM;
             ++cnt;
@@ -190,9 +189,10 @@ int compress(char* str){
 // Simultaneously traverses the common branches of two prefix trees recursively, 
 // and returns the sum of the length of the common code words in bot prefix-trees.
 int get_common_code_len(int* tree1, int* tree2, int idx1, int idx2, int depth){
+    int i;
     int sub_common_code_len = 0;
     // For the input tree nodes check all branches 
-    for (int i = 0; i < ALPHABET_NUM; ++i)
+    for (i = 0; i < ALPHABET_NUM; ++i)
         //Check if both branches exist 
         if (tree1[idx1+i] != 0 && tree2[idx2+i] != 0)
             //Traverse the subtree

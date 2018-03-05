@@ -48,7 +48,7 @@ int main(int argc, char *argv[])
 	buffer = malloc(sizeof(int)*buflen*ALPHABET_NUM);//new int[buflen*ALPHABET_NUM];
 	memset(&buffer[26], 0, sizeof(int)*(buflen-1)*ALPHABET_NUM);
 
-	int i, seq_num;
+	int i, k, l, seq_num;
     
     // Count the sequences in the input fasta file
     // Open the fasta file and ...
@@ -96,9 +96,9 @@ int main(int argc, char *argv[])
     printf("\n");   
 
     // Calculate the LZW-NCD for each sequence pair
-    for (int k = 0; k < seq_num; ++k){
+    for (k = 0; k < seq_num; ++k){
         printf("%s", headers[k]->description);
-        for (int l = 0; l < seq_num; ++l){
+        for (l = 0; l < seq_num; ++l){
             float lzw_kernel_value = (float)(compress(seqs[k], seqs[l]) - min(C[k],C[l])) / max(C[k], C[l]);
             printf("\t%.3f",lzw_kernel_value);
         }
@@ -106,7 +106,7 @@ int main(int argc, char *argv[])
     }
     
     //We clean up, because we are nice boyz!    
-    for (int k = 1; k < seq_num; ++k){
+    for (k = 1; k < seq_num; ++k){
         free(seqs[k]);
         free(headers[k]);
     }
