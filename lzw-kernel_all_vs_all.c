@@ -18,7 +18,7 @@
 #include <stdlib.h>
 #include "seqio.h"
 #include <math.h>
-#include "malloc.h"
+//#include "malloc.h"
 #include "memory.h"
 
 static int* buffer;
