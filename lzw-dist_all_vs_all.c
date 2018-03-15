@@ -17,7 +17,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "seqio.h"
-#include "malloc.h"
+//#include "malloc.h"
 #include "memory.h"
 #define min(X, Y)  ((X) < (Y) ? (X) : (Y))
 #define max(X, Y)  ((X) < (Y) ? (Y) : (X))
