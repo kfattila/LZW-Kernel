@@ -38,9 +38,9 @@
 #include <errno.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <dirent.h>
 #ifdef __unix
 #include <unistd.h>
-#include <dirent.h>
 #ifdef SYSV
 #include <sys/dirent.h>
 #endif
